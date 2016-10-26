@@ -1,28 +1,34 @@
 language: python
-
 cache: pip
-
 matrix:
-    include:
-        - python: 2.7
-          env: TOX_ENV=py27
-        - python: 3.4
-          env: TOX_ENV=py34
-        - python: 3.5
-          env: TOX_ENV=py35
-        - python: 2.7
-          env: TOX_ENV=pep8
-        - python: 3.4
-          env: TOX_ENV=py3pep8
-
+  include:
+  - python: 2.7
+    env: TOX_ENV=py27
+  - python: 3.4
+    env: TOX_ENV=py34
+  - python: 3.5
+    env: TOX_ENV=py35
+  - python: 2.7
+    env: TOX_ENV=pep8
+  - python: 3.4
+    env: TOX_ENV=py3pep8
 addons:
   apt:
     packages:
     - freetds-dev
 install:
-  - pip install -r requirements.txt
-  - pip install -r tox-requirements.txt
+- pip install -r requirements.txt
+- pip install -r tox-requirements.txt
 script:
-  - tox -e $TOX_ENV -- $TOX_FLAGS
+- tox -e $TOX_ENV -- $TOX_FLAGS
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: swyytch
+  password:
+    secure: BnUX9/PSIygAnDnqMU0ro2v9npbauybCB1Fvjh7ASGX0hQ+Pigu2YuWMW2GmZqmzEqoQexBaaLM/c6ZUOCD9ADva/yaQGG4Gfu0DQarL45bGrZdpGX8LaiExoqcDB3gReg6hiBw+nQHDqKrvBsCxZd1QrnI/YBIGIYJypdt/vAFiuVZ4Jpy6WWR76Q9VHTm/ZTk0TOolH0CyJhonFfajJO/tuMcvyvSZBF1Kg4l77RT7Nxhe54bw90VR0n8GO0N6cGJZsP3rzEae7vi7xU/tw0mgTPhrCyRzE9eiPrbPEK5GNTX7TaLKI8iJi/d2F6mcsB0GbBF0kvt+DNLz/pjC6iVwPXWSpIOnj19qsxqslXaPv27psI+axlYK/4QbS7Omo2y3tVfnVAENrKBJ2f5X1akgzwZqy5/B3MWvqyB3s0kTd2uqFbMmbTEZDBEuQ9vySGj6Qnm+elPTab7+2KIhSMNn79jb30KoTFr8B006diK4nYgzczPahlrzeIRojeuiVGEOQ6FW24XmKy/a/eKsRdFDRfwzrhRcHmRC6m7eZQ10m/aV/TnOISuy8j5ZvesC9n6orLoChGHRXvzNHPPA/uj5D7+Bu34E+zV21Z1rtnOGDkWoUWsCR0kBQOowon5YrkTu6KsPAl/bRsWbxcZFuB+dNxNsWDGQaZ2YLsZqRLw=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: rtrox/mssqlcli
