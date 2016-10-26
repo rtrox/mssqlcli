@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from datetime import datetime
+from uuid import UUID
 
 import mock
 
@@ -29,9 +30,13 @@ def test_stringify_on_basic_dict():
 
     `datetime.datetime should be converted to `str`.
     """
-    obj = {'now': datetime(2016, 10, 20, 21, 10, 36, 621341)}
+    obj = {
+        'now': datetime(2016, 10, 20, 21, 10, 36, 621341),
+        'uuid': UUID('34aec16c-4606-4d33-adc2-661e35061cd0')
+    }
     assert formats.stringify(obj) == {
-        'now': '2016-10-20 21:10:36.621341'
+        'now': '2016-10-20 21:10:36.621341',
+        'uuid': '34aec16c-4606-4d33-adc2-661e35061cd0'
     }
 
 
@@ -41,9 +46,12 @@ def test_stringify_on_basic_list():
 
     `datetime.datetime should be converted to `str`.
     """
-    obj = [datetime(2016, 10, 20, 21, 10, 36, 621341)]
+    obj = [
+        datetime(2016, 10, 20, 21, 10, 36, 621341),
+        UUID('34aec16c-4606-4d33-adc2-661e35061cd0')]
     assert formats.stringify(obj) == [
-        '2016-10-20 21:10:36.621341'
+        '2016-10-20 21:10:36.621341',
+        '34aec16c-4606-4d33-adc2-661e35061cd0'
     ]
 
 
@@ -56,20 +64,34 @@ def test_stringify_on_nested_dict():
     """
     obj = {
         "top_level": {
-            "now": datetime(2016, 10, 20, 21, 10, 36, 621341)
+            "now": datetime(2016, 10, 20, 21, 10, 36, 621341),
+            "uuid": UUID('34aec16c-4606-4d33-adc2-661e35061cd0')
         }
     }
     assert formats.stringify(obj) == {
         "top_level": {
-            "now": '2016-10-20 21:10:36.621341'
+            "now": '2016-10-20 21:10:36.621341',
+            "uuid": '34aec16c-4606-4d33-adc2-661e35061cd0'
         }
     }
 
 
 def test_stringify_on_nested_list():
     """Test that `datetime.datetime` is stringified when inside nested list."""
-    obj = {'nows': [datetime(2016, 10, 20, 21, 10, 36, 621341)]}
-    assert formats.stringify(obj) == {'nows': ['2016-10-20 21:10:36.621341']}
+    obj = {
+        'nows': [
+            datetime(2016, 10, 20, 21, 10, 36, 621341),
+            UUID('34aec16c-4606-4d33-adc2-661e35061cd0')
+        ]
+    }
+
+    expected = {
+        'nows': [
+            '2016-10-20 21:10:36.621341',
+            '34aec16c-4606-4d33-adc2-661e35061cd0'
+        ]
+    }
+    assert formats.stringify(obj) == expected
 
 
 expected_plaintext_json_response = """{

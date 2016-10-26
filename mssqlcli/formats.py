@@ -17,6 +17,7 @@
 import csv
 import datetime
 import json
+import uuid
 
 try:
     from StringIO import StringIO
@@ -40,6 +41,10 @@ def stringify(obj):
     for k, v in iterable:
         if type(v) == datetime.datetime:
             obj[k] = str(v)
+
+        if type(v) == uuid.UUID:
+            obj[k] = str(v)
+
         if type(v) in [list, dict]:
             obj[k] = stringify(v)
     return obj

@@ -24,7 +24,7 @@ queries against an Microsoft SQL database.
 *OR*
     -  Clone and  `python setup.py install`
 
-#### DB_VERSION_80 Errors during Installation (OS X)
+### DB_VERSION_80 Errors during Installation (OS X)
 
 On Mac OS X, there is a bug with `pymssql` v2.1.2 which may cause this error:
 ```bash
