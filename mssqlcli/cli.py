@@ -92,7 +92,7 @@ def query(ctx, query):
 @cli.command()
 @click.pass_context
 def template_query(ctx, variable, query):
-    """Run Jinga2 templated query against an MS-SQL Database."""
+    """Run Jinga2 templated query on an MS-SQL Database"""
     kwargs = {}
     for v in variable:
         v = split_param(v)
