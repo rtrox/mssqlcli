@@ -18,9 +18,24 @@ This will ensure that tox and virtualenv are installed, and then run the test su
 
 ## Acceptance Criteria
 
-- Pull requests should follow full pep8 guidelines (the above testing will verify this).
-- Pull requests should not reduce test coverage.
-- Pull requests should have thought-out test cases for any new code.
+### Pull requests should follow full pep8 guidelines (the above testing will verify this).
+### Pull requests should have thought-out test cases for any new code.
+Test Coverage is currently at 100%. Pull requests should not reduce this coverage, and should
+contain thought out test cases for new code.
+
+### Pull requests should contain only a single commit (please squash commits prior to submitting Pull Request)
+
+Pull Requests will be merged via rebase, as we use gitchangelog to generate changelogs. As such, The commit message
+in your pull request should describe what is being changed, and should follow the gitchangelog commit message specs (below).
+
+### Pull request commit messages should follow GitChangeLog specifications
+
+These specifications can be found here: https://github.com/vaab/gitchangelog/blob/master/gitchangelog.rc.reference
+
+As an example, if I was fixing documentation, I might create the following commit text:
+
+```fix: doc: Fixed Installation Instructions to reference proper pip package.```
+
 
 The above requirements are verified via Travis-CI and Coveralls for Python versions 2.7, 3.4, and 3.5.
 
