@@ -18,13 +18,27 @@
 import pymssql
 
 
+def get_connect_kwargs(config):
+    """Returns a dict of arguments from config accepted by pymssql.connect."""
+    keys = ['timeout', 'login_timeout', 'charset', 'host', 'appname', 'port',
+            'conn_properties', 'autocommit', 'tds_version']
+    kwargs = {}
+    for k in keys:
+        try:
+            kwargs[k] = getattr(config, k)
+        except AttributeError:
+            pass
+
+    return kwargs
+
+
 def execute_query(config, query):
     """Execute an arbitrary SQL query based on configuration values."""
     conn = pymssql.connect(
         config.server,
         config.get_username(),
         config.password,
-        port=config.port
+        **get_connect_kwargs(config)
     )
     cursor = conn.cursor(as_dict=True)
     cursor.execute(query)

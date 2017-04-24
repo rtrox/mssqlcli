@@ -1,0 +1,5 @@
+username: a_user
+password: a_password
+server: MY_MSSQL.example.com
+port: 2345
+timeout: 10

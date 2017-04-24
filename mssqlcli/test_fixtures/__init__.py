@@ -88,7 +88,7 @@ class MockPyMSSQLConnection(object):
     To be used with mock as return value for pymssql.connect().
     """
 
-    def __init__(self, server, username, password):
+    def __init__(self, server, username, password, **kwargs):
         """
         Mock the pymssql.Connection.
 
