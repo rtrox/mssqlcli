@@ -3,7 +3,7 @@ cache: pip
 matrix:
   include:
   - python: 2.7
-    env: TOX_ENV=py27
+    env: TOX_ENV=py27 ADDITIONAL_PACKAGES="gitchangelog pypandoc"
   - python: 3.4
     env: TOX_ENV=py34
   - python: 3.5
@@ -17,7 +17,7 @@ addons:
     packages:
     - freetds-dev
 install:
-- pip install -r requirements.txt
+- pip install -r requirements.txt $ADDITIONAL_PACKAGES
 - pip install -r tox-requirements.txt
 script:
 - tox -e $TOX_ENV -- $TOX_FLAGS
@@ -42,8 +42,6 @@ deploy:
     on:
       tags: false
       branch: develop
-      condition: $TOX_EVN=py28
+      condition: $TOX_ENV=py27
       distributions: sdist bdist_wheel
       repo: rtrox/mssqlcli
-
-
