@@ -23,7 +23,8 @@ def execute_query(config, query):
     conn = pymssql.connect(
         config.server,
         config.get_username(),
-        config.password
+        config.password,
+        port=config.port
     )
     cursor = conn.cursor(as_dict=True)
     cursor.execute(query)
