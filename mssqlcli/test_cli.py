@@ -153,6 +153,31 @@ def test_query_default(mock_connect):
 
 @mock.patch('pymssql.connect',
             side_effect=test_fixtures.MockPyMSSQLConnection)
+def test_query_extended_config(mock_connect):
+    """Test query with extended config."""
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        test_fixtures.populate_isolated_filesystem(
+            'extended_config.yml',
+            'fake_query.sql'
+        )
+        result = runner.invoke(
+            cli.cli,
+            ['-c', 'config.yml', 'query', 'query.sql']
+        )
+        assert result.exit_code == 0
+
+        assert mock_connect.called_with(
+            'MY_MSSQL.example.com',
+            'a_user',
+            'a_password',
+            port=2345,
+            timeout=10
+        )
+
+
+@mock.patch('pymssql.connect',
+            side_effect=test_fixtures.MockPyMSSQLConnection)
 def test_template_query_basic(mock_connect):
     """Test query with Pretty output."""
     runner = CliRunner()

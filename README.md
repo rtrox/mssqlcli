@@ -103,17 +103,17 @@ mssqlcli query {path to query}.sql
 
 Run query and return results in CSV format
 ```bash
-mssqlcli query -o csv {path to query}.sql
+mssqlcli -o csv query {path to query}.sql
 ```
 
 Redirect csv to File
 ```bash
-mssqlcli query -o csv {path to query}.sql > results.csv
+mssqlcli -o csv query {path to query}.sql > results.csv
 ```
 
-Run query and return results as a nicely formatted table
+Run query and return results as a json blob
 ```bash
-mssqlcli query -o pretty {path to query}.sql
+mssqlcli -o json query  {path to query}.sql
 ```
 
 Send a template query to the server in file {path to query}.sql.
@@ -125,7 +125,7 @@ mssqlcli template_query -v 'last_name: Ugur' {path to query}.sql
 An example of a templated SQL query is also given below. These are
 the kind of queries that can be used alongside template_query command.
 ```bash
-SELECT * FROM bogus_db.users WHERE last_name = "{{ last_name }}";
+SELECT * FROM bogus_db.users WHERE last_name = '{{ last_name }}';
 ```
 
 

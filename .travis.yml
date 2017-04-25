@@ -1,28 +1,47 @@
 language: python
-
 cache: pip
-
 matrix:
-    include:
-        - python: 2.7
-          env: TOX_ENV=py27
-        - python: 3.4
-          env: TOX_ENV=py34
-        - python: 3.5
-          env: TOX_ENV=py35
-        - python: 2.7
-          env: TOX_ENV=pep8
-        - python: 3.4
-          env: TOX_ENV=py3pep8
-
+  include:
+  - python: 2.7
+    env: TOX_ENV=py27 ADDITIONAL_PACKAGES="gitchangelog pypandoc"
+  - python: 3.4
+    env: TOX_ENV=py34
+  - python: 3.5
+    env: TOX_ENV=py35
+  - python: 2.7
+    env: TOX_ENV=pep8
+  - python: 3.4
+    env: TOX_ENV=py3pep8
 addons:
   apt:
     packages:
     - freetds-dev
 install:
-  - pip install -r requirements.txt
-  - pip install -r tox-requirements.txt
+- pip install -r requirements.txt $ADDITIONAL_PACKAGES
+- pip install -r tox-requirements.txt
 script:
-  - tox -e $TOX_ENV -- $TOX_FLAGS
+- tox -e $TOX_ENV -- $TOX_FLAGS
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  - provider: pypi
+    user: swyytch
+    password:
+      secure: BnUX9/PSIygAnDnqMU0ro2v9npbauybCB1Fvjh7ASGX0hQ+Pigu2YuWMW2GmZqmzEqoQexBaaLM/c6ZUOCD9ADva/yaQGG4Gfu0DQarL45bGrZdpGX8LaiExoqcDB3gReg6hiBw+nQHDqKrvBsCxZd1QrnI/YBIGIYJypdt/vAFiuVZ4Jpy6WWR76Q9VHTm/ZTk0TOolH0CyJhonFfajJO/tuMcvyvSZBF1Kg4l77RT7Nxhe54bw90VR0n8GO0N6cGJZsP3rzEae7vi7xU/tw0mgTPhrCyRzE9eiPrbPEK5GNTX7TaLKI8iJi/d2F6mcsB0GbBF0kvt+DNLz/pjC6iVwPXWSpIOnj19qsxqslXaPv27psI+axlYK/4QbS7Omo2y3tVfnVAENrKBJ2f5X1akgzwZqy5/B3MWvqyB3s0kTd2uqFbMmbTEZDBEuQ9vySGj6Qnm+elPTab7+2KIhSMNn79jb30KoTFr8B006diK4nYgzczPahlrzeIRojeuiVGEOQ6FW24XmKy/a/eKsRdFDRfwzrhRcHmRC6m7eZQ10m/aV/TnOISuy8j5ZvesC9n6orLoChGHRXvzNHPPA/uj5D7+Bu34E+zV21Z1rtnOGDkWoUWsCR0kBQOowon5YrkTu6KsPAl/bRsWbxcZFuB+dNxNsWDGQaZ2YLsZqRLw=
+    on:
+      tags: false
+      branch: develop
+      condition: $TOX_ENV=py27
+      distributions: sdist bdist_wheel
+      server: https://testpypi.python.org/pypi
+      repo: rtrox/mssqlcli
+  - provider: pypi
+    user: swyytch
+    password:
+      secure: WFP4P7wrSVDdHJ1SsbKhS/65mMqDLEBjUL59D5750FYMx0GYs6FZGNZbqFNk+bHiaMQHpfKtBWK4V3jVHjTuGiogKEyiX5iTxR3puAIhUuqP3YX6qU+3/3p99GPI+VMMLTqPViEJFRyRI1XW+g6hHrIQJYtWQyANLaDZVt2P2VDkdn5+hocZi4vJtJlEquoC0gXiZs5q5JIpxSodfk4z5fAU2Ry2eZamJ4OIYtO12YiElt1TpSP0cdwsMJfldVVhwpVHE3BrRcZX8MEzGKnuI1sUZNuHaZ2i3WTW72Anoci+cl1PcZQqOeqbTAonkBjmbtZsTxatqyioTcd3b9dSxymbJ0WPpmjwA0VWHZ3mzWJcP2h7ivakFTqB3QXuCZRHCiX/Jk5jgEijCyEE4pKI2r+TtaRSWfaY3rM/EOlNdbOhqZsWKyovS98lbVFSD5WCI0mOtREIzb45pO+2TXYtQqg+e6mblPXu6WaeSHWsJleHVAu4ttJ/YVuShfwX47I0rKHr0W+uTB806NSMezG/6A6xhxR7oP2FjgEJIa6wRNqrapmnNQffFlonUOK1rN+SpOhh4+He7vRcLv/ivXaJY7iH/+UaaaHwRzRHDe7WsM1EpeWLNP96yAPCecIc7MYUX9zwp04QE3mnOsNhcbS507R5QqmsTtdU2RVS6budzy8=
+    on:
+      tags: true
+      branch: master
+      condition: $TOX_ENV=py27
+      distributions: sdist bdist_wheel
+      repo: rtrox/mssqlcli
