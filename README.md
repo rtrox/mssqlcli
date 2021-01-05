@@ -1,3 +1,6 @@
+# Deprecation Warning
+Due to job changes, I no longer have the need to use this daily, which similarly means it's not getting the testing that it used to. If you're interested in maintaining this moving forward, please open an issue, and I'll be glad to redirect your fork. Until that point, I'm still glad to review changes, but won't be submitting any new code of my own, and will be unable to test strongly in production.
+
 # MS-SQL Command Line Interface (mssqlcli)
 
 [![PyPI](https://img.shields.io/pypi/v/mssqlcli.svg)](https://pypi.python.org/pypi/mssqlcli)
